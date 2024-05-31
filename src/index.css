@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container{
+  @apply max-w-7xl mx-auto w-5/6 lg:w-11/12 xl:w-full py-12
+}
+
+a.active{
+  @apply text-blue-400
+}
+.cta{
+  @apply  text-blue-500 underline hover:no-underline font-semibold rounded  cursor-pointer
+}
+
+.cta-form{
+  @apply bg-fuchsia-500 hover:bg-fuchsia-500/80 transition-colors w-full p-2 text-white uppercase font-semibold rounded shadow cursor-pointer
+}

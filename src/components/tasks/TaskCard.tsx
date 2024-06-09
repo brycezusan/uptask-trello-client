@@ -1,3 +1,4 @@
+import { deleteTask } from "@/api/taskService";
 import { Task } from "@/types/index";
 import {
   Menu,
@@ -7,13 +8,32 @@ import {
   Transition,
 } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, Fragment } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type TaskCarProp = {
   task: Task;
 };
 
 export const TaskCard: FC<TaskCarProp> = ({ task }) => {
+
+  const navigate = useNavigate()
+  const {projectId} = useParams()!
+
+  const client = useQueryClient()
+  const mutation = useMutation({
+    mutationFn:deleteTask,
+    onError:(error)=>{
+      toast.error(error.message)
+    },
+    onSuccess:(data)=>{
+      client.invalidateQueries({queryKey:['editProject',projectId]})
+      toast.success(data)
+    }
+  })
+
   return (
     <li className="p-5 bg-white border border-slate-200 flex gap-3 justify-between">
       <div className="min-w-0 flex flex-col gap-y-4">
@@ -40,6 +60,7 @@ export const TaskCard: FC<TaskCarProp> = ({ task }) => {
             <MenuItems className="absolute right-0 lg:first-of-type:-right-10 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
               <MenuItem>
                 <button
+                  onClick={()=>navigate(`?seeTask=${task._id}`)}
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-gray-900"
                 >
@@ -48,6 +69,7 @@ export const TaskCard: FC<TaskCarProp> = ({ task }) => {
               </MenuItem>
               <MenuItem>
                 <button
+                  onClick={()=>navigate(`?taskEdit=${task._id}`)}
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-gray-900"
                 >
@@ -57,6 +79,7 @@ export const TaskCard: FC<TaskCarProp> = ({ task }) => {
 
               <MenuItem>
                 <button
+                  onClick={()=> mutation.mutate({projectId:projectId!, taskId:task._id})}
                   type="button"
                   className="block px-3 py-1 text-sm leading-6 text-red-500"
                 >

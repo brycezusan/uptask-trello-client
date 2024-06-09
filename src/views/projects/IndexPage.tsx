@@ -10,7 +10,6 @@ export const IndexPage = () => {
   });
 
   if (isLoading) return <p>Cargando..</p>;
-  console.log(data);
 
   if (data)
     return (

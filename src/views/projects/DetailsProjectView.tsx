@@ -3,10 +3,11 @@ import { getProjectById } from "@/api/projectService";
 import { useQuery } from "@tanstack/react-query";
 import { AddTask } from "@/components/tasks/AddTask";
 import { TaskList } from "@/components/tasks/TaskList";
+import { EditTaskData } from "@/components/tasks/EditTaskData";
+import { TaskModalDetails } from "@/components/tasks/TaskModalDetails";
 
 export const DetailsProjectView = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { projectId } = useParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["editProject", projectId],
@@ -36,16 +37,17 @@ export const DetailsProjectView = () => {
             <button
               type="button"
               className="bg-purple-500 hover:bg-purple-500/80 px-10 py-2 rounded shadow shadow-purple-600 text-white font-semibold cursor-pointer transition-colors"
-              onClick={()=>navigate("?newTask=true")}
+              onClick={() => navigate("?newTask=true")}
             >
               Agregar tarea
             </button>
           </nav>
         </header>
 
-        <TaskList tasks={data.tasks}/>
+        <TaskList tasks={data.tasks} />
         <AddTask />
-
+        <EditTaskData />
+        <TaskModalDetails />
       </>
     );
 };

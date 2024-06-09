@@ -7,13 +7,14 @@ export const EditProjectView = () => {
   const params = useParams();
   const { projectId } = params;
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, error, isError } = useQuery({
     queryKey: ["editProject", projectId],
     queryFn: () => getProjectById(projectId!),
     retry: false,
   });
 
   if (isLoading) return <p>Cargando....</p>;
+  console.log(error)
   if (isError) return <Navigate to="404" />;
 
   if (data)

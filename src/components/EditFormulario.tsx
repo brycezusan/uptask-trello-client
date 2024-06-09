@@ -45,7 +45,8 @@ export const EditFormulario: FC<EditFormularioProps> = ({ data  , projectId}) =>
   const handleSubmitForm = (formData: ProjectFormData) =>{
     const data : Project = {
       ...formData,
-      _id:projectId!
+      _id: projectId!,
+      tasks: []
     }
     mutation.mutate(data)
   };

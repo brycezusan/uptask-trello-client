@@ -45,7 +45,7 @@ export const AddTask = () => {
   })
 
   const handleCreateTask = (formData:TaskFormData)=>{
-    mutation.mutate({project:projectId! , formData})
+    mutation.mutate({projectId:projectId! , formData})
   }
 
   return (

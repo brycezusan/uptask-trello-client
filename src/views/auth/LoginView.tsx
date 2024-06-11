@@ -23,7 +23,7 @@ export const LoginView = () => {
     onError: (error) => {
       toast.error(error.message);
       },
-    onSuccess: (data) => { toast.success(data)},
+    onSuccess: () => { toast.success('Iniciando Sesión')},
   });
 
   const handleLogin = (formData: UserLoginForm) => mutation.mutate(formData);

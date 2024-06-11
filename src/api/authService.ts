@@ -53,7 +53,7 @@ export const requestNewtoken = async (
 export const authLogin = async (formData: UserLoginForm) => {
   try {
     const { data } = await api.post<string>(`/auth/login`, formData);
-    return data;
+    localStorage.setItem("auth_token", data);
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       console.log(error);

@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation }from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { Formulario } from "@/components/Formulario";
 import { createProject } from "@/api/projectService";
 import { ProjectFormData } from "@/types/index";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 
 export const CreateProjectView = () => {
   const navigate = useNavigate()
-  const initialValues : ProjectFormData = {
+  const initialValues: ProjectFormData = {
     projectName: "",
     clientName: "",
     description: "",
@@ -21,19 +21,19 @@ export const CreateProjectView = () => {
   } = useForm({ defaultValues: initialValues });
 
   const mutation = useMutation({
-    mutationFn:createProject,
-    onError:(error)=>{
+    mutationFn: createProject,
+    onError: (error) => {
       toast.error(error.message)
     },
-    onSuccess:(data)=>{
+    onSuccess: (data) => {
       toast.success(data.msg)
       setTimeout(() => {
         navigate("/")
       }, 1500);
     }
   })
-
-  const handleSubmitForm = (data:ProjectFormData)=> mutation.mutate(data)
+  
+  const handleSubmitForm = (data: ProjectFormData) => mutation.mutate(data)
 
   return (
     <>
@@ -57,13 +57,13 @@ export const CreateProjectView = () => {
           className="mt-10 p-10 rounded-md"
           onSubmit={handleSubmit(handleSubmitForm)}
           noValidate
-        > 
-          <Formulario 
+        >
+          <Formulario
             register={register}
-            errors={errors}          
+            errors={errors}
           />
           <div className="w-2/3 mx-auto">
-            <input 
+            <input
               className="cta-form"
               type="submit" value="crear proyecto" />
           </div>
